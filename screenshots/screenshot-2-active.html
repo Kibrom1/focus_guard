@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1280">
+  <title>Focus Guard — Screenshot 2: Active</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { width: 1280px; height: 800px; overflow: hidden; }
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    }
+
+    .popup-wrap {
+      width: 300px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.35), 0 4px 16px rgba(0,0,0,0.2);
+      overflow: hidden;
+    }
+
+    .popup-wrap {
+      --indigo: #6366f1;
+      --indigo-dark: #4f46e5;
+      --indigo-light: #e0e7ff;
+      --green: #22c55e;
+      --red: #ef4444;
+      --gray-50: #f9fafb;
+      --gray-100: #f3f4f6;
+      --gray-200: #e5e7eb;
+      --gray-400: #9ca3af;
+      --gray-500: #6b7280;
+      --gray-700: #374151;
+      --gray-900: #111827;
+      --radius: 8px;
+      --radius-sm: 5px;
+      font-size: 13px;
+      color: var(--gray-900);
+    }
+
+    .view { padding: 12px 14px 14px; }
+
+    /* Header */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+    .header-active {
+      background: var(--indigo-light);
+      margin: -12px -14px 14px;
+      padding: 10px 14px;
+      border-radius: 0 0 var(--radius) var(--radius);
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--indigo-dark);
+    }
+    .logo-icon { font-size: 16px; }
+    .status-badge {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--indigo-dark);
+      background: white;
+      padding: 2px 7px;
+      border-radius: 20px;
+    }
+
+    /* Timer */
+    .timer-display {
+      text-align: center;
+      padding: 20px 0 16px;
+    }
+    .countdown {
+      font-size: 52px;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: -0.02em;
+      color: var(--gray-900);
+      line-height: 1;
+    }
+    .timer-label {
+      font-size: 12px;
+      color: var(--gray-400);
+      margin-top: 4px;
+    }
+
+    /* Stats row */
+    .stats-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 4px;
+    }
+    .stat-item {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 10px 8px;
+    }
+    .stat-value {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--gray-900);
+      font-variant-numeric: tabular-nums;
+    }
+    .stat-label {
+      font-size: 10px;
+      color: var(--gray-500);
+      margin-top: 2px;
+    }
+    .stat-divider {
+      width: 1px;
+      height: 36px;
+      background: var(--gray-200);
+    }
+
+    /* Active sites section */
+    .active-sites-section {
+      margin: 8px 0 4px;
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .active-sites-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 7px 10px;
+      background: var(--gray-50);
+    }
+    .mode-pill {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 20px;
+    }
+    .mode-pill-block {
+      background: #fef2f2;
+      color: #b91c1c;
+      border: 1px solid #fecaca;
+    }
+    .active-sites-toggle {
+      background: transparent;
+      border: none;
+      font-size: 11px;
+      color: var(--indigo);
+      cursor: pointer;
+      padding: 0;
+      font-weight: 500;
+    }
+
+    /* Secondary button */
+    .btn-secondary {
+      display: block;
+      width: 100%;
+      padding: 9px;
+      background: white;
+      color: var(--gray-700);
+      border: 1.5px solid var(--gray-200);
+      border-radius: var(--radius);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    /* Caption bar */
+    .caption-bar {
+      position: fixed;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(8px);
+      color: white;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      padding: 10px 24px;
+      border-radius: 30px;
+      letter-spacing: 0.01em;
+      white-space: nowrap;
+      border: 1px solid rgba(255,255,255,0.25);
+    }
+  </style>
+</head>
+<body>
+  <div class="popup-wrap">
+    <div class="view">
+      <!-- Active header -->
+      <header class="header header-active">
+        <div class="logo">
+          <span class="logo-icon">🛡</span>
+          <span class="logo-text">Focus Guard</span>
+        </div>
+        <div class="status-badge">FOCUSING</div>
+      </header>
+
+      <!-- Countdown -->
+      <div class="timer-display">
+        <div class="countdown">24:13</div>
+        <div class="timer-label">remaining</div>
+      </div>
+
+      <!-- Stats row -->
+      <div class="stats-row">
+        <div class="stat-item">
+          <span class="stat-value">4</span>
+          <span class="stat-label">sites blocked</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <span class="stat-value">3</span>
+          <span class="stat-label">distractions</span>
+        </div>
+      </div>
+
+      <!-- Active sites section (collapsed) -->
+      <div class="active-sites-section">
+        <div class="active-sites-header">
+          <span class="mode-pill mode-pill-block">🚫 Blocklist</span>
+          <button class="active-sites-toggle">Manage sites ▾</button>
+        </div>
+      </div>
+
+      <button class="btn-secondary">End Session Early</button>
+    </div>
+  </div>
+
+  <div class="caption-bar">Stay in the zone — live countdown with distraction counter</div>
+</body>
+</html>

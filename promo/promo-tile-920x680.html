@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      width: 920px;
+      height: 680px;
+      overflow: hidden;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    }
+
+    .tile {
+      position: relative;
+      width: 920px;
+      height: 680px;
+      background: linear-gradient(135deg, #4338ca 0%, #6d28d9 60%, #4f46e5 100%);
+      overflow: hidden;
+    }
+
+    /* Decorative circles */
+    .circle-large {
+      position: absolute;
+      top: -140px;
+      right: -140px;
+      width: 580px;
+      height: 580px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.08);
+      pointer-events: none;
+    }
+
+    .circle-small {
+      position: absolute;
+      bottom: -100px;
+      left: -80px;
+      width: 340px;
+      height: 340px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.06);
+      pointer-events: none;
+    }
+
+    /* Extra subtle circle for visual depth */
+    .circle-mid {
+      position: absolute;
+      top: 300px;
+      right: 160px;
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.04);
+      pointer-events: none;
+    }
+
+    /* Content layer */
+    .content {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      padding-left: 48px;
+      padding-right: 48px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Row 1 — Logo line */
+    .logo-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-top: 100px;
+    }
+
+    .logo-emoji {
+      font-size: 72px;
+      line-height: 1;
+    }
+
+    .logo-text {
+      font-size: 56px;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: -0.02em;
+      line-height: 1;
+    }
+
+    .badge-free {
+      background: #ffffff;
+      color: #4338ca;
+      font-size: 22px;
+      font-weight: 700;
+      padding: 8px 20px;
+      border-radius: 40px;
+      line-height: 1;
+      letter-spacing: 0.04em;
+      flex-shrink: 0;
+    }
+
+    /* Row 2 — Headline */
+    .headline {
+      margin-top: 28px;
+    }
+
+    .headline-line {
+      font-size: 64px;
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1.1;
+      letter-spacing: -0.025em;
+    }
+
+    /* Row 3 — Feature pills */
+    .pills-row {
+      display: flex;
+      gap: 14px;
+      margin-top: 32px;
+      flex-wrap: nowrap;
+    }
+
+    .pill {
+      background: rgba(255, 255, 255, 0.15);
+      color: #ffffff;
+      font-size: 24px;
+      font-weight: 500;
+      padding: 10px 20px;
+      border-radius: 40px;
+      white-space: nowrap;
+      line-height: 1;
+    }
+
+    /* Mockup description */
+    .description {
+      margin-top: 28px;
+      font-size: 15px;
+      color: rgba(255, 255, 255, 0.80);
+      font-weight: 400;
+      max-width: 600px;
+      line-height: 1.5;
+    }
+
+    /* Row 4 — Bottom tagline */
+    .tagline {
+      margin-top: 24px;
+      font-size: 26px;
+      color: rgba(255, 255, 255, 0.75);
+      font-style: italic;
+      font-weight: 400;
+    }
+  </style>
+</head>
+<body>
+  <div class="tile">
+    <!-- Decorative circles -->
+    <div class="circle-large"></div>
+    <div class="circle-small"></div>
+    <div class="circle-mid"></div>
+
+    <!-- Content -->
+    <div class="content">
+      <!-- Row 1: Logo -->
+      <div class="logo-row">
+        <span class="logo-emoji">🛡</span>
+        <span class="logo-text">Focus Guard</span>
+        <span class="badge-free">FREE</span>
+      </div>
+
+      <!-- Row 2: Headline -->
+      <div class="headline">
+        <div class="headline-line">Block distractions.</div>
+        <div class="headline-line">Get things done.</div>
+      </div>
+
+      <!-- Row 3: Feature pills -->
+      <div class="pills-row">
+        <span class="pill">🚫 Blocklist &amp; Allowlist</span>
+        <span class="pill">📊 Stats &amp; Streaks</span>
+        <span class="pill">⏰ Daily Schedule</span>
+      </div>
+
+      <!-- Mockup description -->
+      <div class="description">
+        Used by thousands of developers, students, and remote workers to reclaim their focus.
+      </div>
+
+      <!-- Row 4: Tagline -->
+      <div class="tagline">No account. No limits. No cost.</div>
+    </div>
+  </div>
+</body>
+</html>

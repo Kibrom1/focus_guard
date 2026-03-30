@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      width: 440px;
+      height: 280px;
+      overflow: hidden;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    }
+
+    .tile {
+      position: relative;
+      width: 440px;
+      height: 280px;
+      background: linear-gradient(135deg, #4338ca 0%, #6d28d9 60%, #4f46e5 100%);
+      overflow: hidden;
+    }
+
+    /* Decorative circles */
+    .circle-large {
+      position: absolute;
+      top: -80px;
+      right: -80px;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.08);
+      pointer-events: none;
+    }
+
+    .circle-small {
+      position: absolute;
+      bottom: -60px;
+      left: -50px;
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.06);
+      pointer-events: none;
+    }
+
+    /* Content layer */
+    .content {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      padding-left: 36px;
+      padding-right: 24px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Row 1 — Logo line */
+    .logo-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 52px;
+    }
+
+    .logo-emoji {
+      font-size: 36px;
+      line-height: 1;
+    }
+
+    .logo-text {
+      font-size: 28px;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: -0.02em;
+      line-height: 1;
+    }
+
+    .badge-free {
+      background: #ffffff;
+      color: #4338ca;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 20px;
+      line-height: 1;
+      letter-spacing: 0.04em;
+      flex-shrink: 0;
+    }
+
+    /* Row 2 — Headline */
+    .headline {
+      margin-top: 16px;
+    }
+
+    .headline-line {
+      font-size: 32px;
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+
+    /* Row 3 — Feature pills */
+    .pills-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 18px;
+      flex-wrap: nowrap;
+    }
+
+    .pill {
+      background: rgba(255, 255, 255, 0.15);
+      color: #ffffff;
+      font-size: 12px;
+      font-weight: 500;
+      padding: 5px 10px;
+      border-radius: 20px;
+      white-space: nowrap;
+      line-height: 1;
+    }
+
+    /* Row 4 — Bottom tagline */
+    .tagline {
+      margin-top: 18px;
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.75);
+      font-style: italic;
+      font-weight: 400;
+    }
+  </style>
+</head>
+<body>
+  <div class="tile">
+    <!-- Decorative circles -->
+    <div class="circle-large"></div>
+    <div class="circle-small"></div>
+
+    <!-- Content -->
+    <div class="content">
+      <!-- Row 1: Logo -->
+      <div class="logo-row">
+        <span class="logo-emoji">🛡</span>
+        <span class="logo-text">Focus Guard</span>
+        <span class="badge-free">FREE</span>
+      </div>
+
+      <!-- Row 2: Headline -->
+      <div class="headline">
+        <div class="headline-line">Block distractions.</div>
+        <div class="headline-line">Get things done.</div>
+      </div>
+
+      <!-- Row 3: Feature pills -->
+      <div class="pills-row">
+        <span class="pill">🚫 Blocklist &amp; Allowlist</span>
+        <span class="pill">📊 Stats &amp; Streaks</span>
+        <span class="pill">⏰ Daily Schedule</span>
+      </div>
+
+      <!-- Row 4: Tagline -->
+      <div class="tagline">No account. No limits. No cost.</div>
+    </div>
+  </div>
+</body>
+</html>

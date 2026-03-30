@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1280">
+  <title>Focus Guard — Screenshot 5: Done</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { width: 1280px; height: 800px; overflow: hidden; }
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    }
+
+    .popup-wrap {
+      width: 300px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.35), 0 4px 16px rgba(0,0,0,0.2);
+      overflow: hidden;
+    }
+
+    .popup-wrap {
+      --indigo: #6366f1;
+      --indigo-dark: #4f46e5;
+      --indigo-light: #e0e7ff;
+      --green: #22c55e;
+      --red: #ef4444;
+      --gray-50: #f9fafb;
+      --gray-100: #f3f4f6;
+      --gray-200: #e5e7eb;
+      --gray-400: #9ca3af;
+      --gray-500: #6b7280;
+      --gray-700: #374151;
+      --gray-900: #111827;
+      --radius: 8px;
+      --radius-sm: 5px;
+      font-size: 13px;
+      color: var(--gray-900);
+    }
+
+    .view { padding: 12px 14px 14px; }
+
+    /* Done icon */
+    .done-icon {
+      width: 48px;
+      height: 48px;
+      background: #dcfce7;
+      color: var(--green);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      font-weight: 700;
+      margin: 8px auto 10px;
+    }
+
+    .done-title {
+      font-size: 17px;
+      font-weight: 700;
+      text-align: center;
+      color: var(--gray-900);
+      margin-bottom: 14px;
+    }
+
+    /* Done stats */
+    .done-stats {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .done-stat {
+      flex: 1;
+      text-align: center;
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius);
+      padding: 10px 8px;
+    }
+    .done-stat-value {
+      display: block;
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--indigo);
+      font-variant-numeric: tabular-nums;
+    }
+    .done-stat-label {
+      font-size: 10px;
+      color: var(--gray-400);
+      margin-top: 2px;
+    }
+
+    /* Streak (centered single stat) */
+    .done-stat-center {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    .done-stat-center .done-stat-value {
+      display: block;
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--indigo);
+      font-variant-numeric: tabular-nums;
+    }
+    .done-stat-center .done-stat-label {
+      font-size: 10px;
+      color: var(--gray-400);
+      margin-top: 2px;
+    }
+
+    /* CTA box */
+    .done-cta {
+      background: var(--indigo-light);
+      border: 1px solid #c7d2fe;
+      border-radius: var(--radius);
+      padding: 9px 12px;
+      font-size: 12px;
+      color: var(--indigo-dark);
+      margin-bottom: 2px;
+      line-height: 1.45;
+    }
+    .done-cta a {
+      color: var(--indigo-dark);
+      font-weight: 700;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+
+    /* Buttons */
+    .btn-primary {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      background: var(--indigo);
+      color: white;
+      border: none;
+      border-radius: var(--radius);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 10px;
+      box-shadow: 0 4px 10px -2px rgba(99, 102, 241, 0.3);
+    }
+    .btn-ghost {
+      display: block;
+      width: 100%;
+      padding: 8px;
+      background: transparent;
+      color: var(--gray-500);
+      border: none;
+      font-size: 12px;
+      cursor: pointer;
+      margin-top: 4px;
+      text-decoration: underline;
+    }
+
+    /* Caption bar */
+    .caption-bar {
+      position: fixed;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(8px);
+      color: white;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      padding: 10px 24px;
+      border-radius: 30px;
+      letter-spacing: 0.01em;
+      white-space: nowrap;
+      border: 1px solid rgba(255,255,255,0.25);
+    }
+  </style>
+</head>
+<body>
+  <div class="popup-wrap">
+    <div class="view">
+      <!-- Done icon -->
+      <div class="done-icon">✓</div>
+      <h2 class="done-title">Session Complete!</h2>
+
+      <!-- Done stats row -->
+      <div class="done-stats">
+        <div class="done-stat">
+          <span class="done-stat-value">30</span>
+          <span class="done-stat-label">minutes focused</span>
+        </div>
+        <div class="done-stat">
+          <span class="done-stat-value">5</span>
+          <span class="done-stat-label">distractions blocked</span>
+        </div>
+      </div>
+
+      <!-- Streak -->
+      <div class="done-stat-center">
+        <span class="done-stat-value">5</span>
+        <span class="done-stat-label">day streak 🔥</span>
+      </div>
+
+      <!-- CTA -->
+      <div class="done-cta">
+        Want to focus at this time every day? <a>Set up schedule →</a>
+      </div>
+
+      <button class="btn-primary">Start Another Session</button>
+      <button class="btn-ghost">Settings</button>
+    </div>
+  </div>
+
+  <div class="caption-bar">Session complete — see your streak and schedule your next session</div>
+</body>
+</html>

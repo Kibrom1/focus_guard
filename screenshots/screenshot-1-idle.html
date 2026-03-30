@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1280">
+  <title>Focus Guard — Screenshot 1: Idle</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { width: 1280px; height: 800px; overflow: hidden; }
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    }
+
+    /* ── Popup wrapper ── */
+    .popup-wrap {
+      width: 300px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.35), 0 4px 16px rgba(0,0,0,0.2);
+      overflow: hidden;
+    }
+
+    /* ── CSS Variables ── */
+    .popup-wrap {
+      --indigo: #6366f1;
+      --indigo-dark: #4f46e5;
+      --indigo-light: #e0e7ff;
+      --green: #22c55e;
+      --red: #ef4444;
+      --gray-50: #f9fafb;
+      --gray-100: #f3f4f6;
+      --gray-200: #e5e7eb;
+      --gray-400: #9ca3af;
+      --gray-500: #6b7280;
+      --gray-700: #374151;
+      --gray-900: #111827;
+      --radius: 8px;
+      --radius-sm: 5px;
+      font-size: 13px;
+      color: var(--gray-900);
+    }
+
+    .view { padding: 12px 14px 14px; }
+
+    /* Header */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--indigo-dark);
+    }
+    .logo-icon { font-size: 16px; }
+    .header-right { display: flex; align-items: center; gap: 6px; }
+    .icon-btn {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      padding: 2px 4px;
+      color: var(--gray-500);
+      line-height: 1;
+      border-radius: var(--radius-sm);
+    }
+
+    /* Sections */
+    .section { margin-bottom: 12px; }
+    .section-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--gray-500);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 6px;
+    }
+
+    /* Mode picker */
+    .mode-picker { display: flex; gap: 6px; margin-bottom: 10px; }
+    .mode-btn {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      padding: 8px 6px;
+      border: 2px solid var(--gray-200);
+      border-radius: var(--radius);
+      background: var(--gray-50);
+      cursor: pointer;
+      text-align: center;
+    }
+    .mode-btn-icon { font-size: 18px; line-height: 1; }
+    .mode-btn-label { font-size: 12px; font-weight: 700; color: var(--gray-700); }
+    .mode-btn-sub { font-size: 10px; color: var(--gray-400); font-weight: 400; }
+    .mode-btn-block.active { border-color: #f87171; background: #fef2f2; }
+    .mode-btn-block.active .mode-btn-label { color: #b91c1c; }
+    .mode-btn-block.active .mode-btn-sub { color: #f87171; }
+
+    /* Site list */
+    .site-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-bottom: 6px;
+      max-height: 110px;
+      overflow-y: auto;
+    }
+    .site-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-sm);
+      padding: 5px 8px;
+      font-size: 12px;
+    }
+    .site-remove {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      color: var(--gray-400);
+      font-size: 14px;
+      line-height: 1;
+      padding: 4px;
+      margin: -4px;
+    }
+    .add-site-row { display: flex; gap: 6px; }
+    .site-input {
+      flex: 1;
+      padding: 6px 9px;
+      border: 1.5px solid var(--gray-200);
+      border-radius: var(--radius-sm);
+      font-size: 12px;
+      outline: none;
+    }
+    .btn-icon-add {
+      width: 30px;
+      height: 30px;
+      background: var(--indigo);
+      color: white;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-size: 18px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+      padding-bottom: 1px;
+    }
+
+    /* Duration picker */
+    .duration-picker { display: flex; gap: 6px; flex-wrap: wrap; }
+    .duration-btn {
+      flex: 1;
+      padding: 6px 4px;
+      background: var(--gray-100);
+      border: 1.5px solid var(--gray-200);
+      border-radius: var(--radius-sm);
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      color: var(--gray-700);
+    }
+    .duration-btn.active {
+      background: var(--indigo-light);
+      border-color: var(--indigo);
+      color: var(--indigo-dark);
+      font-weight: 700;
+    }
+
+    /* Primary button */
+    .btn-primary {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      background: var(--indigo);
+      color: white;
+      border: none;
+      border-radius: var(--radius);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 10px;
+      box-shadow: 0 4px 10px -2px rgba(99, 102, 241, 0.3);
+    }
+
+    /* Caption bar */
+    .caption-bar {
+      position: fixed;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(8px);
+      color: white;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      padding: 10px 24px;
+      border-radius: 30px;
+      letter-spacing: 0.01em;
+      white-space: nowrap;
+      border: 1px solid rgba(255,255,255,0.25);
+    }
+  </style>
+</head>
+<body>
+  <div class="popup-wrap">
+    <div class="view">
+      <!-- Header -->
+      <header class="header">
+        <div class="logo">
+          <span class="logo-icon">🛡</span>
+          <span class="logo-text">Focus Guard</span>
+        </div>
+        <div class="header-right">
+          <button class="icon-btn" title="Stats">📊</button>
+          <button class="icon-btn" title="Settings">⚙</button>
+        </div>
+      </header>
+
+      <!-- Mode picker -->
+      <div class="section">
+        <div class="mode-picker">
+          <button class="mode-btn mode-btn-block active" type="button">
+            <span class="mode-btn-icon">🚫</span>
+            <span class="mode-btn-label">Blocklist</span>
+            <span class="mode-btn-sub">Block these sites</span>
+          </button>
+          <button class="mode-btn mode-btn-allow" type="button">
+            <span class="mode-btn-icon">✅</span>
+            <span class="mode-btn-label">Allowlist</span>
+            <span class="mode-btn-sub">Allow ONLY these</span>
+          </button>
+        </div>
+
+        <ul class="site-list">
+          <li class="site-item"><span>reddit.com</span><button class="site-remove">×</button></li>
+          <li class="site-item"><span>twitter.com</span><button class="site-remove">×</button></li>
+          <li class="site-item"><span>youtube.com</span><button class="site-remove">×</button></li>
+          <li class="site-item"><span>instagram.com</span><button class="site-remove">×</button></li>
+        </ul>
+
+        <div class="add-site-row">
+          <input type="text" class="site-input" placeholder="e.g. reddit.com" />
+          <button class="btn-icon-add">+</button>
+        </div>
+      </div>
+
+      <!-- Duration picker -->
+      <div class="section">
+        <div class="section-label">Session Duration</div>
+        <div class="duration-picker">
+          <button class="duration-btn" data-min="5">5m</button>
+          <button class="duration-btn" data-min="10">10m</button>
+          <button class="duration-btn" data-min="15">15m</button>
+          <button class="duration-btn" data-min="25" style="background:#e0e7ff;border-color:#6366f1;color:#4f46e5;font-weight:700;">25m</button>
+          <button class="duration-btn" data-min="45">45m</button>
+          <button class="duration-btn" data-min="60">60m</button>
+        </div>
+      </div>
+
+      <button class="btn-primary">Start Focus Session</button>
+    </div>
+  </div>
+
+  <div class="caption-bar">Start a focus session — choose your sites and duration</div>
+</body>
+</html>

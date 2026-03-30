@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1280">
+  <title>Focus Guard — Screenshot 4: Stats</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { width: 1280px; height: 800px; overflow: hidden; }
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    }
+
+    .popup-wrap {
+      width: 300px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.35), 0 4px 16px rgba(0,0,0,0.2);
+      overflow: hidden;
+    }
+
+    .popup-wrap {
+      --indigo: #6366f1;
+      --indigo-dark: #4f46e5;
+      --indigo-light: #e0e7ff;
+      --green: #22c55e;
+      --red: #ef4444;
+      --gray-50: #f9fafb;
+      --gray-100: #f3f4f6;
+      --gray-200: #e5e7eb;
+      --gray-400: #9ca3af;
+      --gray-500: #6b7280;
+      --gray-700: #374151;
+      --gray-900: #111827;
+      --radius: 8px;
+      --radius-sm: 5px;
+      font-size: 13px;
+      color: var(--gray-900);
+    }
+
+    .view { padding: 12px 14px 14px; }
+
+    /* Header */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+    .icon-btn {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      padding: 2px 4px;
+      color: var(--gray-500);
+      line-height: 1;
+      border-radius: var(--radius-sm);
+    }
+    .view-title {
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--gray-700);
+    }
+
+    /* Stats summary grid */
+    .stats-summary {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+    .summary-card {
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius);
+      padding: 10px;
+      text-align: center;
+    }
+    .summary-value {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--indigo);
+      font-variant-numeric: tabular-nums;
+    }
+    .summary-label {
+      font-size: 10px;
+      color: var(--gray-400);
+      margin-top: 2px;
+    }
+
+    /* Sections */
+    .section { margin-bottom: 12px; }
+    .section-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--gray-500);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 6px;
+    }
+
+    #stats-chart {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: var(--radius-sm);
+    }
+
+    /* Site list */
+    .site-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      max-height: 140px;
+      overflow-y: auto;
+    }
+    .site-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-sm);
+      padding: 5px 8px;
+      font-size: 12px;
+    }
+    .site-count {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--indigo);
+      background: var(--indigo-light);
+      padding: 1px 7px;
+      border-radius: 12px;
+    }
+
+    /* Export button */
+    .btn-outline {
+      display: block;
+      width: 100%;
+      padding: 9px;
+      background: white;
+      color: var(--indigo);
+      border: 1.5px solid var(--indigo);
+      border-radius: var(--radius);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    /* Caption bar */
+    .caption-bar {
+      position: fixed;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(8px);
+      color: white;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      padding: 10px 24px;
+      border-radius: 30px;
+      letter-spacing: 0.01em;
+      white-space: nowrap;
+      border: 1px solid rgba(255,255,255,0.25);
+    }
+  </style>
+</head>
+<body>
+  <div class="popup-wrap">
+    <div class="view">
+      <!-- Header -->
+      <header class="header">
+        <button class="icon-btn">←</button>
+        <span class="view-title">Stats</span>
+        <span></span>
+      </header>
+
+      <!-- Summary cards -->
+      <div class="stats-summary">
+        <div class="summary-card">
+          <div class="summary-value">14h 20m</div>
+          <div class="summary-label">Total focus time</div>
+        </div>
+        <div class="summary-card">
+          <div class="summary-value">8</div>
+          <div class="summary-label">Sessions this week</div>
+        </div>
+        <div class="summary-card">
+          <div class="summary-value">5</div>
+          <div class="summary-label">Day streak</div>
+        </div>
+        <div class="summary-card">
+          <div class="summary-value">47</div>
+          <div class="summary-label">All-time blocked</div>
+        </div>
+      </div>
+
+      <!-- Chart section -->
+      <div class="section">
+        <div class="section-label">Focus minutes — last 7 days</div>
+        <canvas id="stats-chart" width="260" height="120"></canvas>
+      </div>
+
+      <!-- Top Distractions -->
+      <div class="section" style="margin-top: 14px;">
+        <div class="section-label">Top Distractions</div>
+        <ul class="site-list">
+          <li class="site-item">
+            <span>reddit.com</span>
+            <span class="site-count">23</span>
+          </li>
+          <li class="site-item">
+            <span>twitter.com</span>
+            <span class="site-count">14</span>
+          </li>
+          <li class="site-item">
+            <span>youtube.com</span>
+            <span class="site-count">7</span>
+          </li>
+          <li class="site-item">
+            <span>instagram.com</span>
+            <span class="site-count">3</span>
+          </li>
+        </ul>
+      </div>
+
+      <button class="btn-outline">Export Stats (JSON)</button>
+    </div>
+  </div>
+
+  <div class="caption-bar">Stats dashboard — track streaks, sessions, and top distractions</div>
+
+  <script>
+    const canvas = document.getElementById('stats-chart');
+    const ctx = canvas.getContext('2d');
+
+    const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    const values = [45, 60, 30, 90, 75, 0, 50];
+    const maxVal = 90;
+
+    const W = canvas.width;
+    const H = canvas.height;
+    const padLeft = 28;
+    const padRight = 8;
+    const padTop = 10;
+    const padBottom = 28;
+    const chartW = W - padLeft - padRight;
+    const chartH = H - padTop - padBottom;
+
+    const barCount = values.length;
+    const barGap = 6;
+    const barW = (chartW - barGap * (barCount - 1)) / barCount;
+
+    // Grid lines
+    ctx.strokeStyle = '#e5e7eb';
+    ctx.lineWidth = 1;
+    const gridLines = 4;
+    for (let i = 0; i <= gridLines; i++) {
+      const y = padTop + (chartH / gridLines) * i;
+      ctx.beginPath();
+      ctx.moveTo(padLeft, y);
+      ctx.lineTo(W - padRight, y);
+      ctx.stroke();
+    }
+
+    // Y-axis labels
+    ctx.fillStyle = '#9ca3af';
+    ctx.font = '9px -apple-system, system-ui, sans-serif';
+    ctx.textAlign = 'right';
+    for (let i = 0; i <= gridLines; i++) {
+      const val = Math.round(maxVal - (maxVal / gridLines) * i);
+      const y = padTop + (chartH / gridLines) * i + 3;
+      ctx.fillText(val, padLeft - 4, y);
+    }
+
+    // Bars
+    values.forEach((val, i) => {
+      const x = padLeft + i * (barW + barGap);
+      const barH = val === 0 ? 4 : (val / maxVal) * chartH;
+      const y = padTop + chartH - barH;
+
+      // Bar fill
+      ctx.fillStyle = val === 0 ? '#e5e7eb' : '#6366f1';
+      const radius = 3;
+      ctx.beginPath();
+      ctx.moveTo(x + radius, y);
+      ctx.lineTo(x + barW - radius, y);
+      ctx.quadraticCurveTo(x + barW, y, x + barW, y + radius);
+      ctx.lineTo(x + barW, padTop + chartH);
+      ctx.lineTo(x, padTop + chartH);
+      ctx.lineTo(x, y + radius);
+      ctx.quadraticCurveTo(x, y, x + radius, y);
+      ctx.closePath();
+      ctx.fill();
+
+      // Day labels
+      ctx.fillStyle = '#9ca3af';
+      ctx.font = '9px -apple-system, system-ui, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(days[i], x + barW / 2, H - 6);
+    });
+  </script>
+</body>
+</html>
