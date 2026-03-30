@@ -1,9 +1,27 @@
-# Focus Guard — GitHub Pages
+# Focus Guard
 
-This repository hosts the privacy policy for the [Focus Guard](https://chrome.google.com/webstore) Chrome extension.
+A free Manifest V3 Chrome extension that blocks distracting websites during timed focus sessions. No session limits. No paywall. No account required.
 
-**Privacy policy URL:** `https://<your-username>.github.io/<repo-name>/`
+## Contents
 
-## Deployment
+| Folder | Description |
+|--------|-------------|
+| `extension/` | Full extension source — load this folder in Chrome via Load unpacked |
+| `index.html` | Privacy policy (served via GitHub Pages) |
 
-This site is deployed via GitHub Pages from the `main` branch root.
+## Install locally
+
+1. Clone this repo
+2. Open `chrome://extensions`
+3. Enable **Developer mode**
+4. Click **Load unpacked** → select the `extension/` folder
+
+## Privacy policy
+
+Hosted at: `https://kibrom1.github.io/focus_guard/`
+
+All user data is stored locally in `chrome.storage.local`. Nothing is transmitted anywhere.
+
+## License
+
+MIT

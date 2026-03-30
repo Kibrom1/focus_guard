@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Focus Guard</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+
+  <!-- ── Idle View ── -->
+  <div id="view-idle" class="view">
+    <header class="header">
+      <div class="logo">
+        <span class="logo-icon">🛡</span>
+        <span class="logo-text">Focus Guard</span>
+      </div>
+      <div class="header-right">
+        <button id="btn-stats-idle" class="icon-btn" title="Stats">📊</button>
+        <button id="btn-settings" class="icon-btn" title="Settings">⚙</button>
+      </div>
+    </header>
+
+    <div class="section">
+      <div class="mode-picker">
+        <button id="mode-btn-block" class="mode-btn mode-btn-block active" type="button">
+          <span class="mode-btn-icon">🚫</span>
+          <span class="mode-btn-label">Blocklist</span>
+          <span class="mode-btn-sub">Block these sites</span>
+        </button>
+        <button id="mode-btn-allow" class="mode-btn mode-btn-allow" type="button">
+          <span class="mode-btn-icon">✅</span>
+          <span class="mode-btn-label">Allowlist</span>
+          <span class="mode-btn-sub">Allow ONLY these</span>
+        </button>
+      </div>
+      <ul id="site-list" class="site-list"></ul>
+      <div class="add-site-row">
+        <input id="site-input" type="text" class="site-input" placeholder="e.g. reddit.com" />
+        <button id="btn-add-site" class="btn-icon-add">+</button>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Session Duration</div>
+      <div class="duration-picker">
+        <button class="duration-btn" data-min="5">5m</button>
+        <button class="duration-btn" data-min="10">10m</button>
+        <button class="duration-btn" data-min="15">15m</button>
+        <button class="duration-btn active" data-min="30">30m</button>
+        <button class="duration-btn" data-min="45">45m</button>
+        <button class="duration-btn" data-min="60">60m</button>
+      </div>
+    </div>
+
+    <button id="btn-start" class="btn-primary">Start Focus Session</button>
+  </div>
+
+  <!-- ── Active View ── -->
+  <div id="view-active" class="view hidden">
+    <header class="header header-active">
+      <div class="logo">
+        <span class="logo-icon">🛡</span>
+        <span class="logo-text">Focus Guard</span>
+      </div>
+      <div class="status-badge">FOCUSING</div>
+    </header>
+
+    <div class="timer-display">
+      <div id="countdown" class="countdown">00:00</div>
+      <div id="timer-label" class="timer-label">remaining</div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-item">
+        <span class="stat-value" id="active-sites-count">0</span>
+        <span class="stat-label" id="active-sites-label">sites blocked</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-value" id="active-attempts">0</span>
+        <span class="stat-label">distractions</span>
+      </div>
+    </div>
+
+    <div class="active-sites-section">
+      <div class="active-sites-header">
+        <span id="active-mode-pill" class="mode-pill"></span>
+        <button id="btn-toggle-sites" class="active-sites-toggle" type="button">Manage sites ▾</button>
+      </div>
+      <div id="active-sites-panel" class="active-sites-panel hidden">
+        <ul id="active-site-list" class="site-list site-list-sm"></ul>
+        <div class="add-site-row">
+          <input id="active-site-input" type="text" class="site-input" placeholder="Add a site..." />
+          <button id="active-btn-add-site" class="btn-icon-add">+</button>
+        </div>
+      </div>
+    </div>
+
+    <button id="btn-end" class="btn-secondary">End Session Early</button>
+  </div>
+
+  <!-- ── Done View ── -->
+  <div id="view-done" class="view hidden">
+    <div class="done-icon">✓</div>
+    <h2 class="done-title">Session Complete!</h2>
+
+    <div class="done-stats">
+      <div class="done-stat">
+        <span class="done-stat-value" id="done-minutes">—</span>
+        <span class="done-stat-label">minutes focused</span>
+      </div>
+      <div class="done-stat">
+        <span class="done-stat-value" id="done-blocked">—</span>
+        <span class="done-stat-label">distractions blocked</span>
+      </div>
+    </div>
+
+    <div class="done-stat" style="text-align:center; margin-bottom: 10px;">
+      <span class="done-stat-value" id="done-streak">0</span>
+      <span class="done-stat-label">day streak</span>
+    </div>
+    <div id="done-cta"></div>
+    <button id="btn-start-again" class="btn-primary">Start Another Session</button>
+    <button id="btn-done-settings" class="btn-ghost">Settings</button>
+  </div>
+
+  <!-- ── Settings View ── -->
+  <div id="view-settings" class="view hidden">
+    <header class="header">
+      <button id="btn-settings-back" class="icon-btn">←</button>
+      <span class="view-title">Settings</span>
+      <button id="btn-show-stats" class="icon-btn" title="Stats">📊</button>
+    </header>
+
+    <div class="section">
+      <div class="section-row">
+        <div>
+          <div class="section-label no-margin">Schedule Mode</div>
+          <div class="section-sublabel">Auto-start a session daily</div>
+        </div>
+        <label class="toggle">
+          <input id="schedule-toggle" type="checkbox" />
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+      <div id="schedule-options" class="schedule-options hidden">
+        <div class="schedule-row">
+          <label class="schedule-label">Start time</label>
+          <input id="schedule-time" type="time" class="schedule-time-input" value="09:00" />
+        </div>
+        <div class="schedule-row">
+          <label class="schedule-label">Duration</label>
+          <select id="schedule-duration" class="schedule-select">
+            <option value="5">5 min</option>
+            <option value="10">10 min</option>
+            <option value="15">15 min</option>
+            <option value="30" selected>30 min</option>
+            <option value="45">45 min</option>
+            <option value="60">60 min</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Stats View ── -->
+  <div id="view-stats" class="view hidden">
+    <header class="header">
+      <button id="btn-stats-back" class="icon-btn">←</button>
+      <span class="view-title">Stats</span>
+      <span></span>
+    </header>
+
+    <div class="stats-summary">
+      <div class="summary-card">
+        <div class="summary-value" id="stat-total-time">0m</div>
+        <div class="summary-label">Total focus time</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-value" id="stat-week-sessions">0</div>
+        <div class="summary-label">Sessions this week</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-value" id="stat-streak">0</div>
+        <div class="summary-label">Day streak</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-value" id="stat-distractions">0</div>
+        <div class="summary-label">All-time blocked</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Focus minutes — last 7 days</div>
+      <canvas id="stats-chart" width="260" height="120"></canvas>
+    </div>
+
+    <div class="section" style="margin-top: 14px;">
+      <div class="section-label">Top Distractions</div>
+      <ul id="top-sites-list" class="site-list" style="max-height: 140px;"></ul>
+    </div>
+    <p id="history-truncation-notice" class="hidden" style="font-size:11px; color:var(--gray-400); text-align:center; margin: 4px 0;">
+      Showing last 90 sessions. Export to keep full history.
+    </p>
+    <button id="btn-export-stats" class="btn-outline" style="margin-top: 10px;">Export Stats (JSON)</button>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
