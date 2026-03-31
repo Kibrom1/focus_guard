@@ -105,9 +105,23 @@ function renderIdleView(state) {
 
   // Duration picker — restore last used
   selectedDuration = state.duration || 30;
+  let matchesPreset = false;
   document.querySelectorAll('.duration-btn').forEach((btn) => {
-    btn.classList.toggle('active', parseInt(btn.dataset.min) === selectedDuration);
+    const isMatch = parseInt(btn.dataset.min) === selectedDuration;
+    btn.classList.toggle('active', isMatch);
+    if (isMatch) matchesPreset = true;
   });
+
+  const customWrapper = $('custom-duration-wrapper');
+  if (customWrapper) {
+    if (!matchesPreset) {
+      customWrapper.classList.add('active');
+      $('custom-duration-input').value = Math.max(1, Math.floor(selectedDuration / 60));
+    } else {
+      customWrapper.classList.remove('active');
+      $('custom-duration-input').value = '';
+    }
+  }
 
   updateStartButtonState(state);
 }
@@ -447,9 +461,27 @@ document.addEventListener('DOMContentLoaded', async () => {
     btn.addEventListener('click', () => {
       selectedDuration = parseInt(btn.dataset.min);
       document.querySelectorAll('.duration-btn').forEach((b) => b.classList.remove('active'));
+      const customWrapper = $('custom-duration-wrapper');
+      if (customWrapper) {
+        customWrapper.classList.remove('active');
+        $('custom-duration-input').value = '';
+      }
       btn.classList.add('active');
     });
   });
+
+  const customInput = $('custom-duration-input');
+  if (customInput) {
+    customInput.addEventListener('input', () => {
+      const hours = parseInt(customInput.value) || 0;
+      if (hours > 0) {
+        selectedDuration = hours * 60;
+        document.querySelectorAll('.duration-btn').forEach((b) => b.classList.remove('active'));
+        $('custom-duration-wrapper').classList.add('active');
+      }
+    });
+    $('custom-duration-wrapper').addEventListener('click', () => customInput.focus());
+  }
 
   // Add site
   $('btn-add-site').addEventListener('click', addSite);

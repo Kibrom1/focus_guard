@@ -330,6 +330,67 @@ button:focus-visible, input:focus-visible {
   font-weight: 700;
 }
 
+.custom-duration {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  background: var(--gray-100);
+  border: 1.5px solid var(--gray-200);
+  border-radius: var(--radius-sm);
+  padding: 0 4px;
+  overflow: hidden;
+  transition: all 0.15s;
+  cursor: text;
+}
+
+.custom-duration:focus-within {
+  border-color: var(--indigo);
+}
+
+.custom-duration.active {
+  background: var(--indigo-light);
+  border-color: var(--indigo);
+  color: var(--indigo-dark);
+  font-weight: 700;
+}
+
+.duration-input {
+  width: 100%;
+  min-width: 20px;
+  border: none;
+  background: transparent;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--gray-700);
+  text-align: right;
+  outline: none;
+  padding: 0;
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+.duration-input::-webkit-outer-spin-button,
+.duration-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.custom-duration.active .duration-input {
+  color: var(--indigo-dark);
+  font-weight: 700;
+}
+
+.duration-unit {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--gray-700);
+  padding-left: 2px;
+}
+
+.custom-duration.active .duration-unit {
+  color: var(--indigo-dark);
+}
+
 
 /* ── Active view ── */
 .timer-display {
