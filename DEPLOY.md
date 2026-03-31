@@ -40,3 +40,4 @@ Use this URL as the Privacy Policy URL when submitting Focus Guard to the Chrome
 
 ## Verification
 Open the URL in a browser — you should see the Focus Guard privacy policy page.
+This page will be shared in chrome develoer
